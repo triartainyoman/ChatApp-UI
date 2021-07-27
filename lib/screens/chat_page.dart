@@ -1,6 +1,33 @@
+import 'package:chatapp_flutter/models/chat_users.dart';
+import 'package:chatapp_flutter/widgets/conversation_list.dart';
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  List<ChatUsers> chatUsers = [
+    ChatUsers(
+      name: "Andrea",
+      messageText: "Awesome Setup",
+      imageURL: "images/picture_1.png",
+      time: "Now",
+    ),
+    ChatUsers(
+      name: "David Holk",
+      messageText: "That's Great",
+      imageURL: "images/picture_2.png",
+      time: "Yesterday",
+    ),
+    ChatUsers(
+      name: "Christina",
+      messageText: "Hey where are you?",
+      imageURL: "images/picture_3.png",
+      time: "July 27",
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +74,7 @@ class ChatPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(16.0),
+              margin: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.grey.shade100,
@@ -61,6 +88,21 @@ class ChatPage extends StatelessWidget {
                   focusedBorder: InputBorder.none,
                 ),
               ),
+            ),
+            ListView.builder(
+              itemCount: chatUsers.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(top: 16.0),
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ConversationList(
+                  name: chatUsers[index].name,
+                  messageText: chatUsers[index].messageText,
+                  imageURL: chatUsers[index].imageURL,
+                  time: chatUsers[index].time,
+                  isMessageRead: (index == 0 || index == 3) ? true : false,
+                );
+              },
             ),
           ],
         ),
